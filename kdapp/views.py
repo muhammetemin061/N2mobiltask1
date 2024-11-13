@@ -73,46 +73,6 @@ def  kullaniciliste(request):
  return render (request , 'kullaniciliste.html',{'users':users})
 
 
-def KullaniciPostGörüntüle(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    posts = Post.objects.filter(user=user)
-    
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            post_id = request.POST.get('post_id')
-            post = get_object_or_404(Post, id=post_id)
-            
-            comment.post = post
-      
-            if request.user.is_authenticated:
-                comment.user = request.user
-         
-            comment.save()
-            return redirect(request.path)
-    else:
-        form = CommentForm()
-
-    return render(request, 'kullanicidetay.html', {
-        'user': user,
-        'posts': posts,
-        'form': form,
-    })
-
-
-    
-    
-
-         
-          
-            
-
-    
-
-
-
-
 def KullaniciDetay(request, user_id):
     user = get_object_or_404(User, id=user_id)
     
@@ -131,6 +91,19 @@ def KullaniciDetay(request, user_id):
             'photos': photos,
             
         })
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+         comment = form.save(commit=False)
+         post_id = request.POST.get('post_id')
+         post = get_object_or_404(Post, id=post_id)
+    
+         comment.post = post
+        comment.save()
+        return redirect(request.path)
+    else:
+        form = CommentForm()
+    
     
      
     
