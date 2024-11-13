@@ -1,0 +1,61 @@
+{% extends "base.html" %}   
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+{% block title%} Liste {% endblock %}
+  {%block content %} 
+  
+    
+
+  
+    <h1 class="bilgi">Kullanıcı Listesi</h1> 
+  
+
+   
+    <table>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Şirket</th>
+            <th>Web Sitesi</th>
+            <th>Adres</th>
+            <th>Konum (Lat, Lng)</th>
+        </tr>
+        {% for user in users %}
+    
+        <tr>
+            <td><a href="{% url 'kullanicidetay'  user.id  %}">{{ user.name }}</a></td>
+            <td><a href="{% url 'kullanicidetay'  user.id  %}">{{ user.surname }}</a></td>
+            <td><a href="mailto:{{user.email}}"class="location-link">{{ user.email }}<span class="tooltip">Mail Gönder </span></a></td>
+            <td><a href="{% url 'kullanicidetay'  user.id  %}">{{ user.phone }}</a></td>
+            <td><a href="{% url 'kullanicidetay'  user.id  %}">{{ user.company.name }}</a></td>
+            <td><a href="https://www.google.com/search?q={{ user.website }}" class="location-link">{{ user.website }}<span class="tooltip">Webde Ara </span></a></td>
+            <td> <a href="https://www.google.com/maps?q={{ user.adress.street }}, {{ user.adress.suite }}, {{ user.adress.city }}, {{ user.adress.zipcode }}" class="location-link">{{ user.adress.street }}, {{ user.adress.suite }}, {{ user.adress.city }}, {{ user.adress.zipcode }}  <span class="tooltip">Adrese Git </span></a></td>
+            <td><a href="https://www.google.com/maps?q={{ user.adress.geo.lat }},{{ user.adress.geo.lng }}" class="location-link"> {{ user.adress.geo.lat }}, {{ user.adress.geo.lng }} <span class="tooltip">Konuma Git</span></a> </td>
+          </tr>
+            
+                 
+             
+       
+       
+      
+        {% endfor %}
+
+    </table>
+    <div class="ekle"><a href="{% url 'kullanici_ekle' %}"><button class="eklebuton"  >Kullanıcı Ekle</button></a></div>
+     <div class="sil"> <a href="{% url 'kullanicisil' %}"><button class="silbuton">Kullanıcı Sil</button></a></div>         
+             
+             
+
+  
+    
+  {% endblock %}
+
+
+

@@ -1,0 +1,18 @@
+{%  extends  "base.html"  %}
+{% load static %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+
+{%block  content %}
+
+<div class="imagecontainer">
+<img src="{%  static 'img/n2mobil_logo.jpeg'   %}" alt="">
+</div>
+<h1 class="hosgeldiniz">Kullanıcı Takip Sistemine Hoşgeldiniz</h1>
+<div class="listehosgeldin"><a  href=" {% url 'kullaniciliste'%}">Kullanıcı Listesi İçin Tıklayınız</a></div>
+
+
+{% endblock %}

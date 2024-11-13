@@ -1,0 +1,41 @@
+{% extends "base.html" %}   
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+{% block title%} Sil {% endblock %}
+  {%block content %} 
+  
+    
+ 
+</head>
+<body>
+    <h1>Kullanıcıyı Sil</h1>
+    <div class="containersil">
+       
+        <form method="POST">
+            {% csrf_token %}
+            <label for="user_id">Silmek istediğiniz kullanıcıyı seçin:</label>
+            <select name="user_id" id="user_id" required>
+                <option value="">-- Kullanıcı Seçin --</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="sil-btn">Sil</button>
+        </form>
+        <div class="geridön"><a href="{% url 'kullaniciliste' %}">Geri Dön</a></div>
+    </div>
+</body>
+</html>
+
+
+    
+  {% endblock %}
+
+
+
+

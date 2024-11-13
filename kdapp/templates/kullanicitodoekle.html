@@ -1,0 +1,64 @@
+{% extends "base.html" %}   
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+{% block title%} ToDo Ekle  {% endblock %}
+
+{%block content%}
+<div class="form-container">
+    <h2>To-Do Listesi</h2>
+    <table>
+        
+        <thead>
+            <tr>
+                <th>Kullanıcı</th>
+                <th>Başlık</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+                <tr>
+                    <td><strong>{{ todo.user.username }}</strong></td>
+                    <td>{{ todo.title }}</td>
+                    <td>
+                        {% if todo.completed %}
+                            Tamamlandı
+                        {% else %}
+                            Tamamlanmadı
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br><br>
+
+<div class="containertodo">
+    <h2>To-Do Ekle</h2>
+ <form method="POST" action="{% url 'kullanicitodoekle' %}">
+    {% csrf_token %}
+    <label for="user">Kullanıcı Seçin:</label>
+    <select name="user" id="user">
+        {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+    </select>
+    
+    <label for="title">Görev Başlığı:</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="completed">Tamamlandı:</label>
+    <input type="checkbox" name="completed" id="completed" value="1">
+
+    <button type="submit">Gönder</button>
+</form>
+</div>
+
+
+{% endblock %}

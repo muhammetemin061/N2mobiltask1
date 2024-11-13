@@ -1,0 +1,81 @@
+{% extends "base.html" %}   
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+{% block title%} Ekle  {% endblock %}
+  {%block content %} 
+  
+    
+ 
+  <div class="containerekle">
+    <h2>Kullanıcı Ekle</h2>
+    <form method="POST" action="{% url 'kullanici_ekle' %}">
+        {% csrf_token %}
+        
+        <label for="name">Adı:</label>
+        <input type="text" name="name" id="name" required placeholder="Eklenecek Kullanıcının Adı" >
+
+        <label for="surname">Soyadı:</label>
+        <input type="text" name="surname" id="surname" required placeholder="Eklenecek Kullanıcının Soyadı">
+
+        <label for="username">Kullanıcı Adı : </label>
+        <input type="text" name="username" id="username" required placeholder="Eklenecek Kullanıcının Kullanıcı Adı " >
+
+        <label for="email">E-posta:</label>
+        <input type="email" name="email" id="email" required placeholder="orn: muslum.turk@n2mobil.com.tr" >
+
+        <label for="phone">Telefon:</label>
+        <input type="text" name="phone" id="phone" required placeholder=" orn:+90 555 555 55 55">
+
+        <label for="website">Web Sitesi:</label>
+       <input type="url" name="website" id="website" required placeholder="www.n2mobil.com.tr">
+
+        <label for="adress" id="adress-label">Adres:</label>
+        <input type="text" name="adress" id="adress" required placeholder="Adres giriniz" value="" onclick="toggleAddressInput()" readonly>
+
+        <div id="address-input-container" style="display: none;">
+            <h4>Adres Bilgileri</h4>
+            <label for="street">Sokak:</label>
+            <input type="text" name="street" id="street" placeholder="Çamlıca Mahallesi" required>
+
+            <label for="suite">Daire:</label>
+            <input type="text" name="suite" id="suite" placeholder="Apt.556" required>
+
+            <label for="city">Şehir:</label>
+            <input type="text" name="city" id="city" placeholder="Ankara" required>
+
+            <label for="zipcode">Posta Kodu:</label>
+            <input type="text" name="zipcode" id="zipcode" placeholder="06200" required>
+
+            <label for="latitude">Enlem:</label>
+            <input type="number" name="latitude" id="latitude" step="any" required placeholder="39.950289">
+
+            <label for="longitude">Boylam:</label>
+            <input type="number" name="longitude" id="longitude" step="any" required placeholder="32.7732722">
+        </div>
+
+        <label for="company">Şirket Bilgileri:</label>
+        <textarea name="company" id="company" required placeholder='{"name": "N2Mobil Araç Takip Sistemleri A.Ş"}'></textarea>
+
+        <button type="submit">Kaydet</button>
+    </form>
+</div>
+
+<script>
+    function toggleAddressInput() {
+        const addressInputContainer = document.getElementById('address-input-container');
+        addressInputContainer.style.display = addressInputContainer.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+
+
+    
+  {% endblock %}
+
+
+
+

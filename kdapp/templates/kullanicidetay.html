@@ -1,0 +1,106 @@
+{% extends "base.html" %}   
+{% load static %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static  'kdapp/css/style1.css' %}">
+{% endblock %}
+
+{% block title%} Detay {% endblock %}
+
+{%block content%}
+
+
+<h1 class="kullaniciadi">{{ user.username }}</h1>
+
+<h2 class="kullanicipost">{{ user.name }} {{ user.surname }}  adlı Kullanıcının  Postları </h2>
+ 
+  <div class="post-section">
+  
+    <ul>
+        {% for post in posts %}
+            <li class="post">
+                <strong>{{ post.title }}</strong><br>
+                <p>{{ post.body }}</p>
+                <h4>Yorumlar:</h4>
+                <ul>
+                    {% for comment in post.comments.all %}
+                        <li>
+                            <strong>{{ comment.name }}:</strong> {{ comment.body }} ({{ comment.email }})
+                        </li>
+                    {% empty %}
+                        <li>Henüz yorum yok.</li>
+                    {% endfor %}
+                </ul>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <input type="text" class ="isimyaz" name="name" placeholder="İsim" required>
+                    <input type="email" class="emailyaz" name="email" placeholder="Email" required>
+                    <textarea name="body"  class="yorumyaz"placeholder="Yorumunuz" required></textarea>
+                    <button type="submit" class="yorumgönder">Yorum Gönder</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>Bu kullanıcı henüz post paylaşmamış.</li>
+        {% endfor %}
+    </ul>
+</div>
+    
+</div>
+<h2>{{ user.name }} {{ user.surname }}   adlı Kullanıcının  Todo'ları</h2>
+<div class="detaytodo">
+  
+    <table>
+        
+        <thead>
+            <tr>
+                <th>Kullanıcı</th>
+                <th>Başlık</th>
+                <th>Durum</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for todo in todos %}
+                <tr>
+                    <td><strong>{{ todo.user.username }}</strong></td>
+                    <td>{{ todo.title }}</td>
+                    <td>
+                        {% if todo.completed %}
+                            Tamamlandı
+                        {% else %}
+                            Tamamlanmadı
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br>
+
+<h2>{{ user.name }} {{ user.surname }}   adlı Kullanıcının  Albümleri</h2>
+
+<div class="album-section">
+   
+    {% for album_data in album_photos %}
+        <div class="album">
+            <h3>{{ album_data.album.title }}</h3>
+            <ul>
+                {% for photo in album_data.photos %}
+                    <li>
+                      
+                        <img src="{{ photo.thumbnailurl }}" alt="">
+                        <p>{{ photo.title }}</p>
+                    </li>
+                {% empty %}
+                    <li>Bu albümde fotoğraf yok.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+    
+</div>
+
+
+{% endblock %}
